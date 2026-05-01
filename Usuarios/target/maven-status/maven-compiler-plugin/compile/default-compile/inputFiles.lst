@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\controller\UsuarioController.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\models\entities\Email.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\models\entities\Rol.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\models\entities\Usuarios.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\models\request\ActualizarUsuario.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\models\request\AgregarUsuario.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\repositories\UsuarioRepository.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\services\UsuariosService.java
+C:\Users\user\Desktop\Usuarios\src\main\java\com\example\Usuarios\UsuariosApplication.java
