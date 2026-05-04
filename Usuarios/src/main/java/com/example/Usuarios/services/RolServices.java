@@ -22,10 +22,10 @@ public class RolServices {
         return rolRepository.findAll();
     }
 
-    public Rol obtenerUsuariosPorId(int id_rol){
+    public Rol obtenerRolesPorId(int id_rol){
         Rol rol = rolRepository.findById(id_rol).orElse(null);
         if (rol == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"rol no encontrado");
         }
         return rol;
     }

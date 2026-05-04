@@ -47,7 +47,7 @@ public class UsuarioController {
         return usuariosService.actualizarUsuarios(actualizar);
     }
 
-    @DeleteMapping("/{idMarca}")                    // {idMarca} de la URL
+    @DeleteMapping("/{id_usuario}")                    // {idMarca} de la URL
     public String eliminarUsuario(@PathVariable int id_usuario){ // Recibe ID de URL
         return usuariosService.eliminarUsuario(id_usuario); // Elimina de BD, devuelve mensaje
     }
