@@ -55,7 +55,7 @@ public class UsuariosService {
     public Usuarios actualizarUsuarios(ActualizarUsuario actUsuario){
             Usuarios Usuario = usuarioRepository.findById(actUsuario.getId_usuario()).orElse(null); // Busca
             if(Usuario == null){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Marca no encontrada.");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario no encontrada.");
             }else{
             /* 
              * ACTUALIZA solo el nombre
