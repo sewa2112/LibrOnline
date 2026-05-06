@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Usuarios.models.entities.Email;
 import com.example.Usuarios.models.request.ActualizarEmail;
 import com.example.Usuarios.models.request.AgregarEmail;
 import com.example.Usuarios.services.EmailServices;
 
-
+@RequestMapping("email")
+@RestController
 public class EmailController {
     
     @Autowired
