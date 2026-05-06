@@ -1,0 +1,11 @@
+#### Agregar nota
+POST http://127.0.0.1:8080/nota HTTP/1.1
+Content-Type: application/json
+
+{
+  "id_notas": 1,
+  "calificacion": 5.0,
+  "prom_calificacion": null,
+  "id_evaluacion": 1,
+  "rut_usuario": "12345678-9"
+}
