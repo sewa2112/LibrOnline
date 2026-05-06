@@ -17,7 +17,7 @@ public class Nota{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_notas;
+    private int id_nota;
 
     @Column(nullable = false)
     private Double calificacion;

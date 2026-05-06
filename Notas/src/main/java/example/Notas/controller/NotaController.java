@@ -41,7 +41,7 @@ public class NotaController {
         return notaService.agregarNota(nueva);
     }
 
-// Queda simplemente apuntando a la ruta principal o "/actualizar"
+    // Queda simplemente apuntando a la ruta principal o "/actualizar"
     @PutMapping("") 
     public Nota actualizarNota(@RequestBody ActualizarNota nueva){
         return notaService.actualizarNota(nueva);
