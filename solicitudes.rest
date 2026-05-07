@@ -1,0 +1,21 @@
+﻿#### Agregar asistencia
+POST http://127.0.0.1:8080/api/asistencia HTTP/1.1
+Content-Type: application/json
+
+{
+  "estudiante": "Juan Pérez",
+  "fecha": "2026-05-06",
+  "estado": "Presente"
+}
+
+
+#### Actualizar asistencia
+PUT http://127.0.0.1:8080/api/asistencia/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "estudiante": "Juan Pérez",
+  "fecha": "2026-05-06",
+  "estado": "Ausente"
+}
