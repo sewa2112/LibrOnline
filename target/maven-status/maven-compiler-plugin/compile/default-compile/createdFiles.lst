@@ -1,8 +1,0 @@
-com\example\Asistencia\Models\Entities\Asistencia.class
-com\example\Asistencia\Models\Request\RespuestaAsistenciaRequest.class
-com\example\Asistencia\Controller\AsistenciaController.class
-com\example\Asistencia\AsistenciaApplication.class
-com\example\Asistencia\Models\Request\ActualizarAsistenciaRequest.class
-com\example\Asistencia\Models\Request\CrearAsistenciaRequest.class
-com\example\Asistencia\Services\AsistenciaService.class
-com\example\Asistencia\Repository\AsistenciaRepository.class
