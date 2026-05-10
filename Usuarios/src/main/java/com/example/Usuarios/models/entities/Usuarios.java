@@ -6,7 +6,6 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "usuarios")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuarios {
 
     @Id
