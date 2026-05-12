@@ -37,7 +37,7 @@ public class UsuariosService {
         usuarioNuevo.setSegundo_nombre(nuevoUsuario.getSegundo_nombre());
         usuarioNuevo.setAp_paterno(nuevoUsuario.getAp_paterno());
         usuarioNuevo.setAp_materno(nuevoUsuario.getAp_materno());
-        usuarioNuevo.setTelefono(0);
+        usuarioNuevo.setTelefono(nuevoUsuario.getTelefono());
         return usuarioRepository.save(usuarioNuevo);
 
     }
@@ -66,7 +66,7 @@ public class UsuariosService {
             Usuario.setSegundo_nombre(actUsuario.getSegundo_nombre());
             Usuario.setAp_paterno(actUsuario.getAp_paterno());
             Usuario.setAp_materno(actUsuario.getAp_materno());
-            Usuario.setTelefono(0);
+            Usuario.setTelefono(actUsuario.getTelefono());
             return usuarioRepository.save(Usuario); // Actualiza en BD
         }
     }
