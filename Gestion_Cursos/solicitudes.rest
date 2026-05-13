@@ -1,0 +1,33 @@
+POST http://127.0.0.1:8080/curso HTTP/1.1
+Content-Type: application/json
+
+{
+    "nivel_curso": "2°",
+    "letra": "A",
+    "id_sala": 4,
+    "id_docente": "33333333-3"
+}
+
+###
+GET http://127.0.0.1:8080/curso HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://127.0.0.1:8080/curso/1 HTTP/1.1
+Content-Type: application/json
+
+###
+PUT http://127.0.0.1:8080/curso HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_curso": 1,
+    "nivel_curso": "1°",
+    "letra": "A",
+    "id_sala": 1,
+    "id_docente": "11111111-1"
+}
+
+###
+DELETE http://127.0.0.1:8080/curso/1 HTTP/1.1
+Content-Type: application/json
