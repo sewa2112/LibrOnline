@@ -9,6 +9,16 @@
             "projectName": "Gestion_Cursos",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GestionReunionesApplication<Gestion_Reuniones>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.Gestion_Reuniones.GestionReunionesApplication",
+            "projectName": "Gestion_Reuniones",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

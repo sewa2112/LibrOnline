@@ -1,0 +1,35 @@
+POST http://127.0.0.1:8080/reunion HTTP/1.1
+Content-Type: application/json
+
+{
+    "fecha": "2026-05-14",
+    "hora_inicio": "09:00:00",
+    "hora_fin": "10:30:00",
+    "asunto": "Reunión de proyecto",
+    "estado": "Pendiente"
+}
+
+###
+GET http://127.0.0.1:8080/reunion HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://127.0.0.1:8080/reunion/1 HTTP/1.1
+Content-Type: application/json
+
+###
+PUT http://127.0.0.1:8080/reunion HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_reunion": 1,
+    "fecha": "2026-05-14",
+    "hora_inicio": "09:00:00",
+    "hora_fin": "10:30:00",
+    "asunto": "Reunión de proyecto",
+    "estado": "Confirmada"
+}
+
+###
+DELETE http://127.0.0.1:8080/reunion/1 HTTP/1.1
+Content-Type: application/json
