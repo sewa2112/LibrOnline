@@ -19,6 +19,16 @@
             "projectName": "Gestion_Reuniones",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CreacionEventosApplication<Creacion_Eventos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.Creacion_Eventos.CreacionEventosApplication",
+            "projectName": "Creacion_Eventos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

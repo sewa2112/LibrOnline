@@ -1,0 +1,38 @@
+### Obtener todos los eventos
+GET http://localhost:8080/evento
+Content-Type: application/json
+
+### Obtener evento por ID
+GET http://localhost:8080/evento/1
+Content-Type: application/json
+
+### Crear evento
+POST http://localhost:8080/evento
+Content-Type: application/json
+
+{
+    "titulo": "Expo Tecnología",
+    "asunto": "Presentación de proyectos innovadores",
+    "fecha_inicio": "2026-05-20",
+    "fecha_fin": "2026-05-22",
+    "tipo_evento": "Tecnología"
+}
+
+
+### Actualizar evento
+PUT http://localhost:8080/evento
+Content-Type: application/json
+
+{
+    "id_evento": 1,
+    "titulo": "Expo Tecnología 2026",
+    "asunto": "Feria anual de innovación",
+    "fecha_inicio": "2026-05-21",
+    "fecha_fin": "2026-05-23",
+    "tipo_evento": "Feria"
+}
+
+
+### Eliminar evento
+DELETE http://localhost:8080/evento/1
+Content-Type: application/json
