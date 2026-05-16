@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import example.Notas.model.entities.Evaluacion;
 import example.Notas.model.entities.Nota;
 import example.Notas.model.request.ActualizarNota;
 import example.Notas.model.request.AgregarNota;
@@ -17,6 +18,9 @@ public class NotaService {
     
     @Autowired
     private NotaRepository notaRepository;
+
+    @Autowired
+    private EvaluacionService evaluacionService;
 
     public List<Nota> obtenerTodasLasNotas(){
         return notaRepository.findAll();
@@ -31,6 +35,7 @@ public class NotaService {
     }
 
     public Nota agregarNota(AgregarNota nueva){
+        Evaluacion evaluacion = evaluacionService.obtenerEvaluacionPorId(nueva.getId_evaluacion());
         Nota notaNueva = new Nota();
         double calificacion = Double.parseDouble(nueva.getCalificacion());
         
@@ -40,7 +45,7 @@ public class NotaService {
         }
 
         notaNueva.setCalificacion(calificacion);
-        notaNueva.setId_evaluacion(nueva.getId_evaluacion());
+        notaNueva.setEvaluacion(evaluacion);
         notaNueva.setRut_usuario(nueva.getRut_usuario());
         
         return notaRepository.save(notaNueva);

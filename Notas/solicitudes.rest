@@ -39,3 +39,39 @@ Content-Type: application/json
 #### Eliminar nota
 DELETE http://127.0.0.1:8080/nota/1 HTTP/1.1
 Content-Type: application/json
+
+
+
+
+### Obtener todas las evaluaciones
+GET http://localhost:8080/evaluacion
+
+
+### Obtener evaluación por ID
+GET http://localhost:8080/evaluacion/1
+
+
+### Crear evaluación
+POST http://localhost:8080/evaluacion
+Content-Type: application/json
+
+{
+    "fecha_evaluacion": "2026-05-30",
+    "asignatura": "Historia",
+    "tipo_evaluacion": "Control"
+}
+
+
+### Actualizar evaluación
+PUT http://localhost:8080/evaluaciones/1
+Content-Type: application/json
+
+{
+    "fecha_evaluacion": "2026-06-02",
+    "asignatura": "Base de Datos",
+    "tipo_evaluacion": "Examen"
+}
+
+
+### Eliminar evaluación
+DELETE http://localhost:8080/evaluaciones/1
