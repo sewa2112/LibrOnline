@@ -26,4 +26,6 @@ public class Direccion {
      @Column(nullable = false)
     private int numero;
     
+    @Column(nullable = false)
+    private int id_usuarios;
 }
