@@ -36,3 +36,43 @@ Content-Type: application/json
 ### Eliminar evento
 DELETE http://localhost:8080/evento/1
 Content-Type: application/json
+
+
+
+
+
+### OBTENER TODOS LOS CALENDARIOS
+GET http://localhost:8080/calendario
+Content-Type: application/json
+
+### OBTENER CALENDARIO POR ID
+GET http://localhost:8080/calendario/1
+Content-Type: application/json
+
+
+### AGREGAR CALENDARIO
+POST http://localhost:8080/calendario
+Content-Type: application/json
+
+{
+    "fecha_inicio": "2026-05-16",
+    "fecha_fin": "2026-05-20",
+    "id_evento": 1
+}
+
+
+### ACTUALIZAR CALENDARIO
+PUT http://localhost:8080/calendario
+Content-Type: application/json
+
+{
+    "id_calendario": 1,
+    "fecha_inicio": "2026-05-18",
+    "fecha_fin": "2026-05-25",
+    "id_evento": 1
+}
+
+
+### ELIMINAR CALENDARIO
+DELETE http://localhost:8080/calendario/1
+Content-Type: application/json
