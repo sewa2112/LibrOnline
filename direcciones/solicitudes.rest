@@ -1,15 +1,21 @@
 
-DELETE http://127.0.0.1:8080/direccion/1 HTTP/1.1
+DELETE http://127.0.0.1:7000/direccion/1 HTTP/1.1
+Content-Type: application/json
+###
+POST http://127.0.0.1:7000/direccion HTTP/1.1
 Content-Type: application/json
 
-POST http://127.0.0.1:8080/direccion HTTP/1.1
+{
+    "calle":"as",
+    "numero":2,
+    "id_usuarios":1
+}
+###
+GET http://127.0.0.1:7000/direccion HTTP/1.1
 Content-Type: application/json
-
-GET http://127.0.0.1:8080/direccion HTTP/1.1
+###
+GET http://127.0.0.1:7000/direccion/1 HTTP/1.1
 Content-Type: application/json
-
-GET http://127.0.0.1:8080/direccion/1 HTTP/1.1
-Content-Type: application/json
-
-PUT http://127.0.0.1:8080/direccion HTTP/1.1
+###
+PUT http://127.0.0.1:7000/direccion HTTP/1.1
 Content-Type: application/json

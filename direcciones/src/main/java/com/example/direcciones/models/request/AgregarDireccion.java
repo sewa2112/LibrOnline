@@ -14,4 +14,7 @@ public class AgregarDireccion {
 
     @NotBlank
     private int numero;
+
+    @NotBlank
+    private int id_usuarios;
 }
