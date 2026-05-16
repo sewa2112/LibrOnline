@@ -25,6 +25,6 @@ public class ActualizarUsuario {
     private String ap_materno;
 
     @NotBlank
-    private int telefono;
+    private String telefono;
     
 }

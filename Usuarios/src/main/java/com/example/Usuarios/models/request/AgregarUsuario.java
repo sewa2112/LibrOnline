@@ -22,6 +22,6 @@ public class AgregarUsuario {
     private String ap_materno;
 
     @NotBlank
-    private int telefono;
+    private String telefono;
 }
 

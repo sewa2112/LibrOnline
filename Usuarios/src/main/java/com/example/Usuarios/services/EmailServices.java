@@ -8,52 +8,83 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Usuarios.models.entities.Email;
+import com.example.Usuarios.models.entities.Usuarios;
 import com.example.Usuarios.models.request.ActualizarEmail;
 import com.example.Usuarios.models.request.AgregarEmail;
 import com.example.Usuarios.repositories.EmailRepository;
+import com.example.Usuarios.repositories.UsuarioRepository;
+
 
 @Service
 public class EmailServices {
-    
 
     @Autowired
     private EmailRepository emailRepository;
 
-    public List<Email> obtenerTodosLosEmail(){
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    // OBTENER TODOS
+    public List<Email> obtenerTodosLosEmail() {
         return emailRepository.findAll();
     }
 
-    public Email obtenerEmailPorId(int id_email){
+    // OBTENER POR ID
+    public Email obtenerEmailPorId(int id_email) {
+
         Email email = emailRepository.findById(id_email).orElse(null);
-        if (email == null){
+
+        if (email == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"email no encontrado");
         }
+
         return email;
     }
 
-    public Email agregarEmail(AgregarEmail nuevoeEmail){
-        Email EmailNuevo = new Email();
-        EmailNuevo.setEmail(nuevoeEmail.getEmail());
-        return emailRepository.save(EmailNuevo);
+    // AGREGAR
+    public Email agregarEmail(AgregarEmail nuevoEmail) {
+
+        Usuarios usuario = usuarioRepository.findById(nuevoEmail.getId_usuario()).orElseThrow(() ->
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "usuario no encontrado")
+            );
+
+        Email emailNuevo = new Email();
+        emailNuevo.setEmail(nuevoEmail.getEmail());
+        emailNuevo.setUsuarios(usuario);
+
+        return emailRepository.save(emailNuevo);
     }
 
-    public String eliminarEmail(int id_email){
-        if(emailRepository.existsById(id_email)){
+    // ELIMINAR
+    public String eliminarEmail(int id_email) {
+
+        if (emailRepository.existsById(id_email)) {
             emailRepository.deleteById(id_email);
             return "email eliminado correctamente.";
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"email no encontrado");
+
+        } else {
+
+            throw new ResponseStatusException( HttpStatus.NOT_FOUND, "email no encontrado");
         }
     }
 
-    public Email actualizarEmail(ActualizarEmail actualizaremail){
-        Email email = emailRepository.findById(actualizaremail.getId_email()).orElse(null);
-        if(email == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"email no encontrado");
-        }else{
+    // ACTUALIZAR
+    public Email actualizarEmail(ActualizarEmail actualizarEmail) {
 
-            email.setEmail(actualizaremail.getEmail());
-            return emailRepository.save(email);
+        Email email = emailRepository
+                .findById(actualizarEmail.getId_email())
+                .orElse(null);
+
+        if (email == null) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "email no encontrado"
+            );
         }
+
+        email.setEmail(actualizarEmail.getEmail());
+
+        return emailRepository.save(email);
     }
 }

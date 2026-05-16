@@ -8,15 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Usuarios.models.entities.Rol;
+import com.example.Usuarios.models.entities.Usuarios;
 import com.example.Usuarios.models.request.ActualizarRol;
 import com.example.Usuarios.models.request.AgregarRol;
 import com.example.Usuarios.repositories.RolRepository;
+import com.example.Usuarios.repositories.UsuarioRepository;
 
 @Service
 public class RolServices {
     
     @Autowired
     private RolRepository rolRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public List<Rol> obtenerTodosLosRoles(){
         return rolRepository.findAll();
@@ -31,9 +36,12 @@ public class RolServices {
     }
 
     public Rol agregarRol(AgregarRol nuevoRol){
-        Rol rolNuevo = new Rol();
-        rolNuevo.setTipo_rol(nuevoRol.getTipo_rol());
-        return rolRepository.save(rolNuevo);
+        Usuarios usuarios =usuarioRepository.findById(nuevoRol.getId_usuario()).orElseThrow(() ->
+            new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrado"));
+        Rol rol = new Rol();
+        rol.setTipo_rol(nuevoRol.getTipo_rol());
+        rol.setUsuarios(usuarios);
+        return rolRepository.save(rol);
     }
 
     public String eliminarRol(int id_rol){

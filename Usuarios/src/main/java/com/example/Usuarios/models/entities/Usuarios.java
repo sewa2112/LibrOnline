@@ -28,5 +28,5 @@ public class Usuarios {
     private String ap_materno;
 
     @Column(nullable = false)
-    private int telefono;
+    private String telefono;
 }
