@@ -16,4 +16,7 @@ public class AgregarEvaluacion {
 
     @NotBlank
     private String tipo_evaluacion;
+
+    @NotBlank
+    private int id_usuarios;
 }
