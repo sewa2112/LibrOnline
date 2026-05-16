@@ -18,9 +18,9 @@ public class Mensajeria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String titulo;        // Ejemplo: "Reunión de Apoderados"
-    private String descripcion;   // El cuerpo del mensaje
-    private String destinatario;  // Ej: "Apoderados", "Alumnos" o "Todos"
-    private LocalDateTime fechaEnvio;    // Usamos LocalDateTime para mayor precisión
+    private String titulo;        
+    private String descripcion;   
+    private String destinatario;  
+    private LocalDateTime fechaEnvio;    
     
 }

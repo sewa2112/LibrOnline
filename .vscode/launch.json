@@ -29,6 +29,16 @@
             "projectName": "Creacion_Eventos",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NotasApplication<Notas>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "example.Notas.NotasApplication",
+            "projectName": "Notas",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
