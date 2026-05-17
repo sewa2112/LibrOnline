@@ -28,5 +28,6 @@ public class Curso {
     @Column(nullable = false)
     private String id_docente;
 
-
+    @Column(nullable = false)
+    private int id_usuarios;
 }

@@ -18,4 +18,7 @@ public class AgregarCurso {
     @NotBlank
     private String id_docente;
 
+   @NotBlank
+    private int id_usuarios;
+
 }
