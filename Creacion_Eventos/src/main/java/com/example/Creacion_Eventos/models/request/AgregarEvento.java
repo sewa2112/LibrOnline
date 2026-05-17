@@ -21,4 +21,7 @@ public class AgregarEvento {
 
     @NotBlank
     private String tipo_evento; 
+
+    @NotBlank
+    private int id_usuarios;
 }

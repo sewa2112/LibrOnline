@@ -34,4 +34,6 @@ public class Reunion {
     @Column(nullable = false)
     private String estado;
     
+    @Column(nullable = false)
+    private int id_usuarios;
 }

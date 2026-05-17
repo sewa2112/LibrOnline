@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.Gestion_Cursos.models.dto.UsuarioDto;
 import com.example.Gestion_Cursos.models.entities.Curso;
 import com.example.Gestion_Cursos.models.request.ActualizarCurso;
 import com.example.Gestion_Cursos.models.request.AgregarCurso;
@@ -18,6 +20,9 @@ public class CursoService {
 
     @Autowired
     private CursoRepository cursoRepository;
+
+    @Autowired
+    private WebClient usuarioWebClient;
 
     public List <Curso> obtenerTodosLosCursos() {
         return cursoRepository.findAll();
@@ -32,11 +37,25 @@ public class CursoService {
     }
 
     public Curso agregarCurso(AgregarCurso nuevo){
+        UsuarioDto usuarioDto =  null;
+        try{
+            usuarioDto = usuarioWebClient.get()
+                .uri("/usuario/{id_usuario}", nuevo.getId_usuarios())
+                .retrieve()
+                .bodyToMono(UsuarioDto.class)
+                .block();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ENDPOINT ---> usuario no encontrada");
+        }   
+        if(usuarioDto == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrada");
+        }
         Curso cursoNuevo = new Curso();
         cursoNuevo.setLetra(nuevo.getLetra());
         cursoNuevo.setNivel_curso(nuevo.getNivel_curso());
         cursoNuevo.setId_sala(nuevo.getId_sala());
         cursoNuevo.setId_docente(nuevo.getId_docente());
+        cursoNuevo.setId_usuarios(nuevo.getId_usuarios());
         return cursoRepository.save(cursoNuevo);
     }
 
