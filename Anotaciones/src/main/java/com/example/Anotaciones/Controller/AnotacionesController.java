@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import com.example.Anotaciones.Models.Entities.Anotaciones;
+import com.example.Anotaciones.Models.Request.AgregarAnotaciones;
 import com.example.Anotaciones.Services.AnotacionesService;
 
 
@@ -35,8 +36,8 @@ public class AnotacionesController {
     }
 
     @PostMapping("")
-    public Anotaciones guardar(@RequestBody Anotaciones anotacion) {
-        return anotacionesService.guardar(anotacion);
+    public Anotaciones guardar(@RequestBody AgregarAnotaciones anotacion) {
+        return anotacionesService.agregarAnotacion(anotacion);
     }
 
     @DeleteMapping("/{id}")

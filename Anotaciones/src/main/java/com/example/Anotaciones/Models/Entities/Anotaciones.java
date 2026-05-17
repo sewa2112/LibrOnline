@@ -1,7 +1,8 @@
 package com.example.Anotaciones.Models.Entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +18,17 @@ import lombok.Data;
 public class Anotaciones {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String tipo;
-    private String descripcion;
-    private LocalDateTime fechaCreacion;
+    private int id;
 
+    @Column(nullable = false)
+    private String tipo;
+
+    @Column(nullable = false)
+    private String descripcion;
+
+    @Column(nullable = false)
+    private LocalDate fechaCreacion;
+
+    @Column(nullable = false)
+    private int id_usuarios;
 }
