@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.Creacion_Eventos.models.dto.UsuarioDto;
 import com.example.Creacion_Eventos.models.entities.Evento;
 import com.example.Creacion_Eventos.models.request.ActualizarEvento;
 import com.example.Creacion_Eventos.models.request.AgregarEvento;
@@ -17,6 +19,9 @@ public class EventoService {
 
     @Autowired
     private EventoRepository eventoRepository;
+
+    @Autowired
+    private WebClient usuarioWebClient;
     
 
     public List<Evento> obtenerTodosLosEventos(){
@@ -32,12 +37,26 @@ public class EventoService {
     }
 
     public Evento agregarEvento(AgregarEvento nuevo){
+        UsuarioDto usuarioDto =  null;
+        try{
+            usuarioDto = usuarioWebClient.get()
+                .uri("/usuario/{id_usuario}", nuevo.getId_usuarios())
+                .retrieve()
+                .bodyToMono(UsuarioDto.class)
+                .block();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ENDPOINT ---> usuario no encontrada");
+        }   
+        if(usuarioDto == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrada");
+        }
         Evento evento = new Evento();
         evento.setTitulo(nuevo.getTitulo());
         evento.setAsunto(nuevo.getAsunto());
         evento.setFecha_inicio(nuevo.getFecha_inicio());
         evento.setFecha_fin(nuevo.getFecha_fin());
         evento.setTipo_evento(nuevo.getTipo_evento());
+        evento.setId_usuarios(nuevo.getId_usuarios());
 
         return eventoRepository.save(evento);
     }

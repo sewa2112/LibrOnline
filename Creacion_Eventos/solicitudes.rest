@@ -1,13 +1,13 @@
 ### Obtener todos los eventos
-GET http://localhost:8080/evento
+GET http://localhost:5004/evento
 Content-Type: application/json
 
 ### Obtener evento por ID
-GET http://localhost:8080/evento/1
+GET http://localhost:5004/evento/1
 Content-Type: application/json
 
 ### Crear evento
-POST http://localhost:8080/evento
+POST http://localhost:5004/evento
 Content-Type: application/json
 
 {
@@ -15,12 +15,13 @@ Content-Type: application/json
     "asunto": "Presentación de proyectos innovadores",
     "fecha_inicio": "2026-05-20",
     "fecha_fin": "2026-05-22",
-    "tipo_evento": "Tecnología"
+    "tipo_evento": "Tecnología",
+    "id_usuarios":1
 }
 
 
 ### Actualizar evento
-PUT http://localhost:8080/evento
+PUT http://localhost:5004/evento
 Content-Type: application/json
 
 {
@@ -34,7 +35,7 @@ Content-Type: application/json
 
 
 ### Eliminar evento
-DELETE http://localhost:8080/evento/1
+DELETE http://localhost:5004/evento/1
 Content-Type: application/json
 
 

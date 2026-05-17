@@ -33,5 +33,6 @@ public class Evento {
     @Column(nullable = false)
     private String tipo_evento;
 
-
+    @Column(nullable = false)
+    private int id_usuarios;
 }
