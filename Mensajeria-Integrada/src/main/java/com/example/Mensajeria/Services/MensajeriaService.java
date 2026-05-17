@@ -55,6 +55,7 @@ public class MensajeriaService {
         mensajeria.setDescripcion(request.getDescripcion());
         mensajeria.setDestinatario(request.getDestinatario());
         mensajeria.setFechaEnvio(java.time.LocalDateTime.now());
+        mensajeria.setId_usuarios(request.getId_usuarios());
         return mensajeriaRepository.save(mensajeria);
     }
 
