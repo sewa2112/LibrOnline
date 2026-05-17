@@ -36,7 +36,7 @@ public class AntecedentesMedController {
     
     @PostMapping("")
     public Antecedentes_medicos agregarAntecedentes_apoderados(@RequestBody Agregar_antecedentes_med nuevoAntecedente){
-        return antecedentes_med_services.agregarAntecedentes(nuevoAntecedente);
+        return antecedentes_med_services.agregarAntecedente(nuevoAntecedente);
     }
     
     @PutMapping("")

@@ -24,4 +24,6 @@ public class Hoja_de_vida {
 
     @Column(nullable = false)
     private int id_usuarios;
+
+
 }

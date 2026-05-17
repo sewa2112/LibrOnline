@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.matriculas.models.entities.Hoja_de_vida;
 import com.example.matriculas.models.entities.Matriculas;
 import com.example.matriculas.models.request.Actualizar_matricula;
 import com.example.matriculas.models.request.Agregar_matricula;
+import com.example.matriculas.repositories.HojaVidaRepository;
 import com.example.matriculas.repositories.MatriculasRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class MatriculaServices {
     
     @Autowired
     private MatriculasRepository matriculasRepository;
+
+    @Autowired
+    private HojaVidaRepository hojaRepository;
 
     public List<Matriculas> obtenerTodasLasMatriculas(){
         return matriculasRepository.findAll();
@@ -31,14 +36,18 @@ public class MatriculaServices {
 
     }
 
-    public Matriculas agregarMatriculas(Agregar_matricula nuevoMatricula){
-        Matriculas matriculaNuevo = new Matriculas();
-        matriculaNuevo.setFecha_matricula(nuevoMatricula.getFecha_matricula());
-        matriculaNuevo.setEstado_matricula(nuevoMatricula.getEstado_matricula());
-        matriculaNuevo.setCoste_matricula(nuevoMatricula.getCoste_matricula());
-        matriculaNuevo.setIva(nuevoMatricula.getIva());
-        matriculaNuevo.setTotal_matriculas(nuevoMatricula.getTotal_matriculas());
-        return matriculasRepository.save(matriculaNuevo);
+    public Matriculas agregarMatriculas(Agregar_matricula nuevaMatricula){
+        Hoja_de_vida hoja = hojaRepository.findById(nuevaMatricula.getId_hoja()).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Hoja de vida no encontrada"));
+
+        Matriculas matricula = new Matriculas();
+        matricula.setFecha_matricula(nuevaMatricula.getFecha_matricula());
+        matricula.setEstado_matricula(nuevaMatricula.getEstado_matricula());
+        matricula.setCoste_matricula(nuevaMatricula.getCoste_matricula());
+        matricula.setIva(nuevaMatricula.getIva());
+        matricula.setTotal_matriculas(nuevaMatricula.getTotal_matriculas());
+        matricula.setHoja_de_vida(hoja);
+        return matriculasRepository.save(matricula);
     }
 
     public String eliminarMatriculas(int id_matricula){

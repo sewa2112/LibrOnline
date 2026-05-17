@@ -8,15 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.matriculas.models.entities.Antecedentes_medicos;
+import com.example.matriculas.models.entities.Hoja_de_vida;
 import com.example.matriculas.models.request.Actualizar_antecedentes_med;
 import com.example.matriculas.models.request.Agregar_antecedentes_med;
 import com.example.matriculas.repositories.AntecedentesMedRepository;
+import com.example.matriculas.repositories.HojaVidaRepository;
 
 @Service
 public class Antecedentes_med_Services {
     
     @Autowired
     private AntecedentesMedRepository antecedentesMedRepository;
+
+    @Autowired
+    private HojaVidaRepository hojaRepository;
 
     public List<Antecedentes_medicos> obtenerTodasLosAntecedentes(){
         return antecedentesMedRepository.findAll();
@@ -31,16 +36,20 @@ public class Antecedentes_med_Services {
 
     }
 
-    public Antecedentes_medicos agregarAntecedentes(Agregar_antecedentes_med nuevoAntecedente){
-        Antecedentes_medicos AntecedenteNuevo = new Antecedentes_medicos();
-        AntecedenteNuevo.setHospital_nacimiento(nuevoAntecedente.getHospital_nacimiento());
-        AntecedenteNuevo.setEnfermedades(nuevoAntecedente.getEnfermedades());
-        AntecedenteNuevo.setLesiones(nuevoAntecedente.getLesiones());
-        AntecedenteNuevo.setMedicamentos(nuevoAntecedente.getMedicamentos());
-        AntecedenteNuevo.setFecha_enfermedad(nuevoAntecedente.getFecha_enfermedad());
-        AntecedenteNuevo.setFecha_lesiones(nuevoAntecedente.getFecha_lesiones());
-        AntecedenteNuevo.setEstado_enfermedad(nuevoAntecedente.getEstado_enfermedad());
-        return antecedentesMedRepository.save(AntecedenteNuevo);
+    public Antecedentes_medicos agregarAntecedente(Agregar_antecedentes_med nuevo){
+        Hoja_de_vida hoja = hojaRepository.findById(nuevo.getId_hoja()).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Hoja de vida no encontrada"));
+
+        Antecedentes_medicos antecedente =new Antecedentes_medicos();
+        antecedente.setHospital_nacimiento(nuevo.getHospital_nacimiento());
+        antecedente.setEnfermedades(nuevo.getEnfermedades());
+        antecedente.setLesiones(nuevo.getLesiones());
+        antecedente.setMedicamentos(nuevo.getMedicamentos());
+        antecedente.setFecha_enfermedad(nuevo.getFecha_enfermedad());
+        antecedente.setFecha_lesiones(nuevo.getFecha_lesiones());
+        antecedente.setEstado_enfermedad(nuevo.getEstado_enfermedad());
+        antecedente.setHoja_de_vida(hoja);
+        return antecedentesMedRepository.save(antecedente);
     }
 
     public String eliminarAntecedente(int id_antecedente){

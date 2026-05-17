@@ -14,4 +14,7 @@ public class Agregar_antecedentes_acad {
     private LocalDate anno_anterior;
 
     private Float prom_anno_anterior;
+
+    @NotNull
+    private int id_hoja;
 }

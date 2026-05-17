@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.matriculas.models.entities.Antecedentes_apoderados;
+import com.example.matriculas.models.entities.Hoja_de_vida;
 import com.example.matriculas.models.request.Actualizar_antecedentess_apo;
 import com.example.matriculas.models.request.Agregar_antecedentess_apo;
 import com.example.matriculas.repositories.AntecedentesApodRepository;
+import com.example.matriculas.repositories.HojaVidaRepository;
 
 @Service
 public class Antecedentes_apo_services {
@@ -18,6 +20,9 @@ public class Antecedentes_apo_services {
 
     @Autowired
     private AntecedentesApodRepository antecedentesApodRepository;
+
+    @Autowired
+    private HojaVidaRepository hojaRepository;
 
     public List<Antecedentes_apoderados> obtenerTodasLosAntecedentes(){
         return antecedentesApodRepository.findAll();
@@ -32,12 +37,16 @@ public class Antecedentes_apo_services {
 
     }
 
-    public Antecedentes_apoderados agregarAntecedentes(Agregar_antecedentess_apo nuevoAntecedente){
-        Antecedentes_apoderados AntecedenteNuevo = new Antecedentes_apoderados();
-        AntecedenteNuevo.setNivel_academico(nuevoAntecedente.getNivel_academico());
-        AntecedenteNuevo.setNumero_hijos(nuevoAntecedente.getNumero_hijos());
-        AntecedenteNuevo.setEstado_civil(nuevoAntecedente.getEstado_civil());
-        return antecedentesApodRepository.save(AntecedenteNuevo);
+     public Antecedentes_apoderados agregarAntecedentes(Agregar_antecedentess_apo nuevo){
+        Hoja_de_vida hoja = hojaRepository.findById(nuevo.getId_hoja()).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Hoja de vida no encontrada papito :/"));
+
+        Antecedentes_apoderados antecedente =new Antecedentes_apoderados();
+        antecedente.setNivel_academico(nuevo.getNivel_academico());
+        antecedente.setNumero_hijos(nuevo.getNumero_hijos());
+        antecedente.setEstado_civil(nuevo.getEstado_civil());
+        antecedente.setHoja_de_vida(hoja);
+        return antecedentesApodRepository.save(antecedente);
     }
 
     public String eliminarAntecedentes(int id_antecedente){

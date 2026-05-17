@@ -23,4 +23,7 @@ public class Agregar_matricula {
 
     @NotBlank
     private  int total_matriculas;
+
+    @NotNull
+    private Integer id_hoja;
 }

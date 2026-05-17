@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.matriculas.models.entities.Antecedentes_academicos;
+import com.example.matriculas.models.entities.Hoja_de_vida;
 import com.example.matriculas.models.request.Actualizar_antecedentes_acad;
 import com.example.matriculas.models.request.Agregar_antecedentes_acad;
 import com.example.matriculas.repositories.AntecedentesAcadRepository;
+import com.example.matriculas.repositories.HojaVidaRepository;
 
 @Service
 public class Antecedentes_acad_Services {
      @Autowired
     private AntecedentesAcadRepository antecedentesAcademicosRepository;
+
+    @Autowired
+    private HojaVidaRepository hojaRepository;
 
     public List<Antecedentes_academicos> obtenerTodasLosAntecedentes(){
         return antecedentesAcademicosRepository.findAll();
@@ -31,11 +36,15 @@ public class Antecedentes_acad_Services {
     }
 
     public Antecedentes_academicos agregarAntecedentes(Agregar_antecedentes_acad nuevoAntecedente){
-        Antecedentes_academicos AntecedenteNuevo = new Antecedentes_academicos();
-        AntecedenteNuevo.setLogros_academicos(nuevoAntecedente.getLogros_academicos());
-        AntecedenteNuevo.setAnno_anterior(nuevoAntecedente.getAnno_anterior());
-        AntecedenteNuevo.setProm_anno_anterior(nuevoAntecedente.getProm_anno_anterior());
-        return antecedentesAcademicosRepository.save(AntecedenteNuevo);
+        Hoja_de_vida hoja = hojaRepository.findById(nuevoAntecedente.getId_hoja()).orElseThrow(() ->
+            new ResponseStatusException(HttpStatus.NOT_FOUND,"Hoja de vida no encontrada"));
+
+        Antecedentes_academicos antecedenteNuevo =new Antecedentes_academicos();
+        antecedenteNuevo.setLogros_academicos(nuevoAntecedente.getLogros_academicos());
+        antecedenteNuevo.setAnno_anterior(nuevoAntecedente.getAnno_anterior());
+        antecedenteNuevo.setProm_anno_anterior(nuevoAntecedente.getProm_anno_anterior());
+        antecedenteNuevo.setHoja_de_vida(hoja);
+        return antecedentesAcademicosRepository.save(antecedenteNuevo);
     }
 
     public String eliminarAntecedente(int id_antecedente){

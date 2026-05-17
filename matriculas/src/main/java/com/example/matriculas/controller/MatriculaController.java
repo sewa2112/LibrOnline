@@ -35,8 +35,8 @@ public class MatriculaController {
     }
     
     @PostMapping("")
-    public Matriculas agregarMatriculas(@RequestBody Agregar_matricula nuevoMatricula){
-        return matriculaServices.agregarMatriculas(nuevoMatricula);
+    public Matriculas agregarMatriculas(@RequestBody Agregar_matricula nuevaMatricula){
+        return matriculaServices.agregarMatriculas(nuevaMatricula);
     }
     
     @PutMapping("")
