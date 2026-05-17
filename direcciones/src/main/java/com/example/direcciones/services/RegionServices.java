@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.direcciones.models.entities.Pais;
 import com.example.direcciones.models.entities.Region;
 import com.example.direcciones.models.request.ActualizarRegion;
 import com.example.direcciones.models.request.AgregarRegion;
+import com.example.direcciones.repositories.PaisRepository;
 import com.example.direcciones.repositories.RegionRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class RegionServices {
     
     @Autowired
     private RegionRepository regionRepository;
+
+    @Autowired
+    private PaisRepository paisRepository;
 
     public List<Region> obtenerTodasLasRegiones(){
         return regionRepository.findAll();
@@ -31,10 +36,14 @@ public class RegionServices {
     }
 
     public Region agregarRegion(AgregarRegion nuevoRegion){
+        Pais pais = paisRepository.findById(nuevoRegion.getId_pais()).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Pais no encontrado"));
         Region regionNuevo = new Region();
-        regionNuevo.setNombre_region(nuevoRegion.getNombre_region());
-        return regionRepository.save(regionNuevo);
-    }
+        regionNuevo.setNombre_region(
+        nuevoRegion.getNombre_region());
+        regionNuevo.setPais(pais);
+    return regionRepository.save(regionNuevo);
+}
 
     public String eliminarRegion(int id_region){
         if(regionRepository.existsById(id_region)){

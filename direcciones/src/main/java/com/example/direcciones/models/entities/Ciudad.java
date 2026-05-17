@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -22,5 +24,9 @@ public class Ciudad {
 
     @Column(nullable = false)
     private String nombre_ciudad;
+
+    @ManyToOne
+    @JoinColumn(name = "id_region", nullable = false)
+    private Region region;
 
 }

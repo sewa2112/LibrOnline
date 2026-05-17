@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.direcciones.models.entities.Ciudad;
 import com.example.direcciones.models.entities.Comuna;
 import com.example.direcciones.models.request.ActualizarComuna;
 import com.example.direcciones.models.request.AgregarComuna;
+import com.example.direcciones.repositories.CiudadRepository;
 import com.example.direcciones.repositories.ComunaRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class ComunaServices {
     
     @Autowired
     private ComunaRepository comunaRepository;
+
+    @Autowired
+    private CiudadRepository ciudadRepository;
 
     public List<Comuna> obtenerTodasLasComunas(){
         return comunaRepository.findAll();
@@ -30,11 +35,15 @@ public class ComunaServices {
         return comuna;
     }
 
-    public Comuna agregarComuna(AgregarComuna nuevoComuna){
-        Comuna comunaNuevo = new Comuna();
-        comunaNuevo.setNombre_comuna(nuevoComuna.getNombre_comuna());
-        return comunaRepository.save(comunaNuevo);
+    public Comuna agregarComuna(AgregarComuna nuevaComuna) {
+        Ciudad ciudad = ciudadRepository.findById(nuevaComuna.getId_ciudad()).orElseThrow(() -> 
+            new ResponseStatusException(HttpStatus.NOT_FOUND,"Ciudad no encontrada"));
+        Comuna comuna = new Comuna();
+        comuna.setNombre_comuna(nuevaComuna.getNombre_comuna());
+        comuna.setCiudad(ciudad);
+        return comunaRepository.save(comuna);
     }
+
 
     public String eliminarComuna(int id_comuna){
         if(comunaRepository.existsById(id_comuna)){

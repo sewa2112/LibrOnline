@@ -8,15 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.direcciones.models.entities.Ciudad;
+import com.example.direcciones.models.entities.Region;
 import com.example.direcciones.models.request.ActualizarCiudad;
 import com.example.direcciones.models.request.AgregarCiudad;
 import com.example.direcciones.repositories.CiudadRepository;
+import com.example.direcciones.repositories.RegionRepository;
 
 @Service
 public class CiudadServices {
     
     @Autowired
     private CiudadRepository ciudadRepository;
+
+    @Autowired
+    private RegionRepository regionRepository;
 
     public List<Ciudad> obtenerTodasLasCiudades(){
         return ciudadRepository.findAll();
@@ -30,10 +35,13 @@ public class CiudadServices {
         return ciudad;
     }
 
-    public Ciudad agregarCiudad(AgregarCiudad nuevoCiudad){
-        Ciudad ciudadNuevo = new Ciudad();
-        ciudadNuevo.setNombre_ciudad(nuevoCiudad.getNombre_ciudad());
-        return ciudadRepository.save(ciudadNuevo);
+    public Ciudad agregarCiudad(AgregarCiudad nuevaCiudad) {
+        Region region = regionRepository.findById(nuevaCiudad.getId_region()).orElseThrow(() -> 
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Region no encontrada"));
+        Ciudad ciudad = new Ciudad();
+        ciudad.setNombre_ciudad(nuevaCiudad.getNombre_ciudad());
+        ciudad.setRegion(region);
+        return ciudadRepository.save(ciudad);
     }
 
     public String eliminarCiudad(int id_ciudad){

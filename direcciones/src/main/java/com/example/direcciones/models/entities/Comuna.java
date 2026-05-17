@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -22,5 +24,9 @@ public class Comuna {
 
     @Column(nullable = false)
     private String nombre_comuna;
+
+    @ManyToOne
+    @JoinColumn(name = "id_ciudad", nullable = false)
+    private Ciudad ciudad;
 
 }

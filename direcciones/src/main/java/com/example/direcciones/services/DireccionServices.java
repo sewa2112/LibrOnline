@@ -9,9 +9,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.direcciones.models.dto.UsuarioDto;
+import com.example.direcciones.models.entities.Comuna;
 import com.example.direcciones.models.entities.Direccion;
 import com.example.direcciones.models.request.ActualizarDireccion;
 import com.example.direcciones.models.request.AgregarDireccion;
+import com.example.direcciones.repositories.ComunaRepository;
 import com.example.direcciones.repositories.DireccionRepository;
 
 
@@ -20,6 +22,9 @@ public class DireccionServices {
     
     @Autowired
     private DireccionRepository direccionRepository;
+
+    @Autowired
+    private ComunaRepository comunaRepository;
 
     @Autowired
     private WebClient usuarioWebClient;
@@ -36,42 +41,47 @@ public class DireccionServices {
         return direccion;
     }
 
-    public Direccion agregarDireccion(AgregarDireccion nuevoDireccion){
+    public Direccion agregarDireccion(AgregarDireccion nuevaDireccion){
+    // buscar comuna
+    Comuna comuna = comunaRepository.findById(nuevaDireccion.getId_comuna()).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Comuna no encontrada"));
 
-        try{
+        try {System.out.println("Buscando usuario: " + nuevaDireccion.getId_usuarios());
 
-        System.out.println("Buscando usuario: " + nuevoDireccion.getId_usuarios());
-
+        // buscar usuario en microservicio
         UsuarioDto usuarioDto = usuarioWebClient.get()
-                .uri("/usuario/{id_usuario}", nuevoDireccion.getId_usuarios())
-                .retrieve()
-                .bodyToMono(UsuarioDto.class)
-                .block();
+            .uri("/usuario/{id_usuario}",
+                nuevaDireccion.getId_usuarios())
+            .retrieve()
+            .bodyToMono(UsuarioDto.class)
+            .block();
 
         System.out.println(usuarioDto);
 
+        // validar usuario
         if(usuarioDto == null){
+
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "usuario no encontrada"
+                HttpStatus.NOT_FOUND,
+                "Usuario no encontrado"
             );
         }
-
-        Direccion direccionNuevo = new Direccion();
-
-        direccionNuevo.setId_usuarios(nuevoDireccion.getId_usuarios());
-        direccionNuevo.setCalle(nuevoDireccion.getCalle());
-        direccionNuevo.setNumero(nuevoDireccion.getNumero());
-
-        return direccionRepository.save(direccionNuevo);
+        // crear direccion
+        Direccion direccionNueva = new Direccion();
+        direccionNueva.setId_usuarios(nuevaDireccion.getId_usuarios());
+        direccionNueva.setCalle(nuevaDireccion.getCalle());
+        direccionNueva.setNumero(nuevaDireccion.getNumero());
+        // conectar comuna
+        direccionNueva.setComuna(comuna);
+        return direccionRepository.save(direccionNueva);
 
     } catch(Exception e){
 
         e.printStackTrace();
 
         throw new RuntimeException(e);
-        }
     }
+}
 
     public String eliminarDireccion(int id_direccion){
         if(direccionRepository.existsById(id_direccion)){
