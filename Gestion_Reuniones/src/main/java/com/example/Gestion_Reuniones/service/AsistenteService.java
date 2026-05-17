@@ -8,15 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Gestion_Reuniones.models.entities.Asistente;
+import com.example.Gestion_Reuniones.models.entities.Reunion;
 import com.example.Gestion_Reuniones.models.request.ActualizarAsistente;
 import com.example.Gestion_Reuniones.models.request.AgregarAsistente;
 import com.example.Gestion_Reuniones.repository.AsistenteRepository;
+import com.example.Gestion_Reuniones.repository.ReunionRepository;
 
 @Service
 public class AsistenteService {
 
     @Autowired
     private AsistenteRepository asistenteRepository;
+
+    @Autowired
+    private ReunionRepository reunionRepository;
 
     public List<Asistente> obtenerTodosAsistentes(){
         return asistenteRepository.findAll();
@@ -32,11 +37,15 @@ public class AsistenteService {
     }
 
     public Asistente agregarAsistente(AgregarAsistente nuevo){
+        Reunion reunion = reunionRepository.findById(nuevo.getId_reunion()).orElseThrow(() ->
+         new ResponseStatusException(HttpStatus.NOT_FOUND,"Reunion no encontrada"));
+         
         Asistente asistente = new Asistente();
         asistente.setPrimer_nombre(nuevo.getPrimer_nombre());
         asistente.setSegundo_nombre(nuevo.getSegundo_nombre());
         asistente.setPrimer_apellido(nuevo.getPrimer_apellido());
         asistente.setSegundo_apellido(nuevo.getSegundo_apellido());
+        asistente.setReunion(reunion);
         return asistenteRepository.save(asistente);
     }
 

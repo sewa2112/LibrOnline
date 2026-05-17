@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Gestion_Reuniones.models.entities.Reunion;
 import com.example.Gestion_Reuniones.models.request.ActualizarReunion;
+import com.example.Gestion_Reuniones.models.request.AgregarReunion;
 import com.example.Gestion_Reuniones.service.ReunionService;
 
 @RestController
@@ -34,7 +35,7 @@ public class ReunionController {
     }
 
     @PostMapping("")
-    public Reunion agregarReunion(@RequestBody Reunion nueva){
+    public Reunion agregarReunion(@RequestBody AgregarReunion nueva){
         return reunionService.agregarReunion(nueva);
     }
 

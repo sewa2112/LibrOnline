@@ -10,14 +10,20 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Gestion_Reuniones.models.dto.UsuarioDto;
 import com.example.Gestion_Reuniones.models.entities.Reunion;
+import com.example.Gestion_Reuniones.models.entities.Sala;
 import com.example.Gestion_Reuniones.models.request.ActualizarReunion;
+import com.example.Gestion_Reuniones.models.request.AgregarReunion;
 import com.example.Gestion_Reuniones.repository.ReunionRepository;
+import com.example.Gestion_Reuniones.repository.SalaRepository;
 
 @Service
 public class ReunionService {
 
     @Autowired
     private ReunionRepository reunionRepository;
+
+    @Autowired
+    private SalaRepository salaRepository;
 
     @Autowired
     private WebClient usuarioWebClient;
@@ -35,7 +41,7 @@ public class ReunionService {
     }
 
 
-    public Reunion agregarReunion(Reunion nueva){
+    public Reunion agregarReunion(AgregarReunion nueva){
         UsuarioDto usuarioDto =  null;
         try{
             usuarioDto = usuarioWebClient.get()
@@ -49,14 +55,17 @@ public class ReunionService {
         if(usuarioDto == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrada");
         }
-        Reunion reunionNueva = new Reunion();
-        reunionNueva.setFecha(nueva.getFecha());
-        reunionNueva.setHora_inicio(nueva.getHora_inicio());
-        reunionNueva.setHora_fin(nueva.getHora_fin());
-        reunionNueva.setAsunto(nueva.getAsunto());
-        reunionNueva.setEstado(nueva.getEstado());
-        reunionNueva.setId_usuarios(nueva.getId_usuarios());
-        return reunionRepository.save(reunionNueva);
+        Sala sala = salaRepository.findById(nueva.getId_sala()).orElseThrow(() ->
+            new ResponseStatusException(HttpStatus.NOT_FOUND,"Sala no encontrada"));
+            Reunion reunionNueva = new Reunion();
+            reunionNueva.setFecha(nueva.getFecha());
+            reunionNueva.setHora_inicio(nueva.getHora_inicio());
+            reunionNueva.setHora_fin(nueva.getHora_fin());
+            reunionNueva.setAsunto(nueva.getAsunto());
+            reunionNueva.setEstado(nueva.getEstado());
+            reunionNueva.setId_usuarios(nueva.getId_usuarios());
+            reunionNueva.setSala(sala);
+            return reunionRepository.save(reunionNueva);
     }
     
 

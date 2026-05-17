@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -25,4 +26,8 @@ public class AgregarReunion {
 
     @NotBlank
     private int id_usuarios;
+
+    @NotNull
+    private int id_sala;
+
 }
