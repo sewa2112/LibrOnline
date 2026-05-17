@@ -7,7 +7,7 @@ import lombok.Data;
 public class ActualizarDocente {
     
     @NotBlank
-    private int id_docente;
+    private Integer id_docente;
 
     @NotBlank
     private String nombre_docente;

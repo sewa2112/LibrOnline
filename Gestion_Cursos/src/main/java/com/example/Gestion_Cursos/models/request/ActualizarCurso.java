@@ -15,8 +15,8 @@ public class ActualizarCurso {
     private String nivel_curso;
 
     @NotBlank
-    private String id_sala;
+    private int id_sala;
 
     @NotBlank
-    private String id_docente;
+    private int id_docente;
 }

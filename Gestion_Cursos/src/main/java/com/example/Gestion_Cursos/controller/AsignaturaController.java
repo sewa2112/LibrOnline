@@ -18,7 +18,7 @@ import com.example.Gestion_Cursos.models.request.AgregarAsignatura;
 import com.example.Gestion_Cursos.service.AsignaturaService;
 
 @RestController
-@RequestMapping("asignaturas")
+@RequestMapping("asignatura")
 public class AsignaturaController {
 
     @Autowired

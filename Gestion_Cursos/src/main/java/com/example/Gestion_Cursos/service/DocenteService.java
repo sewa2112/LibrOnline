@@ -48,14 +48,19 @@ public class DocenteService {
     }
 
 
-    public Docente actualizaDocente(ActualizarDocente nuevoDocente, Integer id_docente) {
-        Docente docente = docenteRepository.findById(nuevoDocente.getId_docente()).orElse(null);
-        if (docente == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Docente no encontrado con esa id");
-        }
-        docente.setNombre(nuevoDocente.getNombre_docente());
-        docente.setEspecialidad(nuevoDocente.getEspecialidad());
-        return docenteRepository.save(docente);
-    }
+    public Docente actualizaDocente(ActualizarDocente nuevoDocente) {
+
+    Docente docente = docenteRepository
+        .findById(nuevoDocente.getId_docente())
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Docente no encontrado"
+        ));
+
+    docente.setNombre(nuevoDocente.getNombre_docente());
+    docente.setEspecialidad(nuevoDocente.getEspecialidad());
+
+    return docenteRepository.save(docente);
+}
     
 }

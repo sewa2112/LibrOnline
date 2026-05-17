@@ -9,10 +9,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Gestion_Cursos.models.dto.UsuarioDto;
+import com.example.Gestion_Cursos.models.entities.Asignatura;
 import com.example.Gestion_Cursos.models.entities.Curso;
+import com.example.Gestion_Cursos.models.entities.Docente;
 import com.example.Gestion_Cursos.models.request.ActualizarCurso;
 import com.example.Gestion_Cursos.models.request.AgregarCurso;
+import com.example.Gestion_Cursos.repository.AsignaturaRepository;
 import com.example.Gestion_Cursos.repository.CursoRepository;
+import com.example.Gestion_Cursos.repository.DocenteRepository;
 
 @Service
 public class CursoService {
@@ -22,7 +26,15 @@ public class CursoService {
     private CursoRepository cursoRepository;
 
     @Autowired
+    private DocenteRepository docenteRepository;
+
+    @Autowired
+    private AsignaturaRepository asignaturaRepository;
+
+    @Autowired
     private WebClient usuarioWebClient;
+
+
 
     public List <Curso> obtenerTodosLosCursos() {
         return cursoRepository.findAll();
@@ -50,12 +62,18 @@ public class CursoService {
         if(usuarioDto == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrada");
         }
+
+        Docente docente = docenteRepository.findById(nuevo.getId_docente()).orElseThrow(() -> 
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Docente no encontrado"));
+        List<Asignatura> asignaturas = asignaturaRepository.findAllById(nuevo.getId_asignaturas());
+
         Curso cursoNuevo = new Curso();
         cursoNuevo.setLetra(nuevo.getLetra());
         cursoNuevo.setNivel_curso(nuevo.getNivel_curso());
         cursoNuevo.setId_sala(nuevo.getId_sala());
-        cursoNuevo.setId_docente(nuevo.getId_docente());
         cursoNuevo.setId_usuarios(nuevo.getId_usuarios());
+        cursoNuevo.setDocente(docente);
+        cursoNuevo.setAsignaturas(asignaturas);
         return cursoRepository.save(cursoNuevo);
     }
 
@@ -76,7 +94,10 @@ public class CursoService {
         curso.setLetra(nuevoCurso.getLetra());
         curso.setNivel_curso(nuevoCurso.getNivel_curso());
         curso.setId_sala(nuevoCurso.getId_sala());
-        curso.setId_docente(nuevoCurso.getId_docente());
+
+        Docente docente = docenteRepository.findById(nuevoCurso.getId_docente()).orElseThrow(() -> 
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Docente no encontrado"));
+        curso.setDocente(docente);
         return cursoRepository.save(curso); 
 
     }

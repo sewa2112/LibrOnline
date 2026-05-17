@@ -1,6 +1,9 @@
 package com.example.Gestion_Cursos.models.request;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -13,12 +16,16 @@ public class AgregarCurso {
     private String nivel_curso;
 
     @NotBlank
-    private String id_sala;
+    private int id_sala;
 
     @NotBlank
-    private String id_docente;
+    private int id_docente;
 
-   @NotBlank
+    @NotNull
+    private List<Integer> id_asignaturas;
+
+   @NotNull
     private int id_usuarios;
+    
 
 }
