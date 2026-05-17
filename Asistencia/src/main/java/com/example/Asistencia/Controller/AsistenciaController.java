@@ -31,21 +31,13 @@ public class AsistenciaController {
     // Endpoint para pasar la asistencia (POST http://localhost:8080/api/asistencia)
     @PostMapping
     public Asistencia guardar(@RequestBody CrearAsistenciaRequest request) {
-        Asistencia asistencia = new Asistencia();
-        asistencia.setEstudiante(request.getEstudiante());
-        asistencia.setFecha(request.getFecha());
-        asistencia.setEstado(request.getEstado());
-        return asistenciaService.guardarAsistencia(asistencia);
+        return asistenciaService.agregarAsistencia(request);
     }
 
     // Endpoint para actualizar la asistencia (PUT http://localhost:8080/api/asistencia/{id})
     @PutMapping("/{id}")
-    public Asistencia actualizar(@PathVariable int id, @RequestBody ActualizarAsistenciaRequest request) {
-        Asistencia asistencia = new Asistencia();
-        asistencia.setEstudiante(request.getEstudiante());
-        asistencia.setFecha(request.getFecha());
-        asistencia.setEstado(request.getEstado());
-        return asistenciaService.actualizarAsistencia(id, asistencia);
+    public Asistencia actualizar(@RequestBody ActualizarAsistenciaRequest request) {
+        return asistenciaService.actualizarAsistencia(request);
     }
 
     // Endpoint para eliminar una asistencia (DELETE http://localhost:8080/api/asistencia/{id})

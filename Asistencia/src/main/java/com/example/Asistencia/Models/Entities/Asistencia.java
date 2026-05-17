@@ -22,6 +22,9 @@ public class Asistencia {
     private LocalDate fecha;
 
     @Column(nullable = false)
-    private String estado; 
+    private String estado;
+
+    @Column(nullable = false)
+    private int id_usuarios;
 
 }

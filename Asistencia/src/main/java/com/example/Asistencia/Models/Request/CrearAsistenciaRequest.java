@@ -10,10 +10,14 @@ public class CrearAsistenciaRequest {
 
     @NotBlank
     private String estudiante;
+
     @NotBlank
     private LocalDate fecha;
+
     @NotBlank   
     private String estado;
 
-  
+    @NotBlank
+    private int id_usuarios;
+
 }
