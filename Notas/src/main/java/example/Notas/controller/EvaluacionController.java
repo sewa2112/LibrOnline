@@ -40,8 +40,9 @@ public class EvaluacionController {
         return evaluacionService.agregarEvaluacion(nuevaEvaluacion);
     }
 
-    @PutMapping("")
-    public Evaluacion actualizarEvaluacion(@RequestBody ActualizarEvaluacion nuevaEvaluacion){
+    @PutMapping("{id_evaluacion}")
+    public Evaluacion actualizarEvaluacion(@PathVariable int id_evaluacion, @RequestBody ActualizarEvaluacion nuevaEvaluacion){
+        nuevaEvaluacion.setId_evaluacion(id_evaluacion);
         return evaluacionService.actualizarEvaluacion(nuevaEvaluacion);
     }
     

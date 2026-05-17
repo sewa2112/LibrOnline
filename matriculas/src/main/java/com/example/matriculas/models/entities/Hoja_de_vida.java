@@ -21,4 +21,7 @@ public class Hoja_de_vida {
 
     @Column(nullable = false)
     private LocalDate fecha_creacion;
+
+    @Column(nullable = false)
+    private int id_usuarios;
 }

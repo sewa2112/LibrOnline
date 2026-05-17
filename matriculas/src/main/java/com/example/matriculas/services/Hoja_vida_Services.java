@@ -1,12 +1,15 @@
 package com.example.matriculas.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.matriculas.models.dto.UsuarioDto;
 import com.example.matriculas.models.entities.Hoja_de_vida;
 import com.example.matriculas.models.request.Actualizar_hoja_vida;
 import com.example.matriculas.models.request.Agregar_hoja_vida;
@@ -17,6 +20,9 @@ public class Hoja_vida_Services {
     
     @Autowired
     private HojaVidaRepository hojaVidaRepository;
+
+    @Autowired
+    private WebClient usuarioWebClient;
 
     public List<Hoja_de_vida> obtenerTodasLasHojas(){
         return hojaVidaRepository.findAll();
@@ -32,10 +38,26 @@ public class Hoja_vida_Services {
     }
 
     public Hoja_de_vida agregarHoja(Agregar_hoja_vida nuevoHoja){
+        UsuarioDto usuarioDto =  null;
+        try{
+            usuarioDto = usuarioWebClient.get()
+                .uri("/usuario/{id_usuario}", nuevoHoja.getId_usuarios())
+                .retrieve()
+                .bodyToMono(UsuarioDto.class)
+                .block();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ENDPOINT ---> usuario no encontrada");
+        }   
+        if(usuarioDto == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrada");
+        }
         Hoja_de_vida HojaNuevo = new Hoja_de_vida();
-        HojaNuevo.setFecha_creacion(nuevoHoja.getFecha_cracion());
+        HojaNuevo.setFecha_creacion(LocalDate.now());
+        HojaNuevo.setId_usuarios(nuevoHoja.getId_usuarios());
         return hojaVidaRepository.save(HojaNuevo);
-    }
+        
+    } 
+
 
     public String eliminarHoja(int id_hoja){
         if (hojaVidaRepository.existsById(id_hoja)) { 

@@ -26,5 +26,8 @@ public class Evaluacion {
 
     @Column(nullable = false)
     private String tipo_evaluacion;
+
+    @Column(nullable = false)
+    private int id_usuarios;
     
 }
