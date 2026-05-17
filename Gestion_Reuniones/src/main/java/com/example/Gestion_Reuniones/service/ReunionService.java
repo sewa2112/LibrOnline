@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.Gestion_Reuniones.models.dto.UsuarioDto;
 import com.example.Gestion_Reuniones.models.entities.Reunion;
 import com.example.Gestion_Reuniones.models.request.ActualizarReunion;
 import com.example.Gestion_Reuniones.repository.ReunionRepository;
@@ -16,6 +18,9 @@ public class ReunionService {
 
     @Autowired
     private ReunionRepository reunionRepository;
+
+    @Autowired
+    private WebClient usuarioWebClient;
 
     public List<Reunion> obtenerTodasLasReuniones() {
         return reunionRepository.findAll();
@@ -31,12 +36,26 @@ public class ReunionService {
 
 
     public Reunion agregarReunion(Reunion nueva){
+        UsuarioDto usuarioDto =  null;
+        try{
+            usuarioDto = usuarioWebClient.get()
+                .uri("/usuario/{id_usuario}", nueva.getId_usuarios())
+                .retrieve()
+                .bodyToMono(UsuarioDto.class)
+                .block();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ENDPOINT ---> usuario no encontrada");
+        }   
+        if(usuarioDto == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"usuario no encontrada");
+        }
         Reunion reunionNueva = new Reunion();
         reunionNueva.setFecha(nueva.getFecha());
         reunionNueva.setHora_inicio(nueva.getHora_inicio());
         reunionNueva.setHora_fin(nueva.getHora_fin());
         reunionNueva.setAsunto(nueva.getAsunto());
         reunionNueva.setEstado(nueva.getEstado());
+        reunionNueva.setId_usuarios(nueva.getId_usuarios());
         return reunionRepository.save(reunionNueva);
     }
     

@@ -22,4 +22,7 @@ public class AgregarReunion {
 
     @NotBlank
     private String estado;
+
+    @NotBlank
+    private int id_usuarios;
 }
